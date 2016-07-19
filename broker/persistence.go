@@ -1,8 +1,9 @@
 package hrotti
 
 import (
-	"code.google.com/p/go-uuid/uuid"
-	. "github.com/alsm/hrotti/packets"
+	// "code.google.com/p/go-uuid/uuid"
+	. "github.com/wjames2000/hrotti/packets"
+	uuid "github.com/satori/go.uuid"
 )
 
 type dirFlag byte

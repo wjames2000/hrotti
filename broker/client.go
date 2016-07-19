@@ -2,13 +2,13 @@ package hrotti
 
 import (
 	//"errors"
-	"code.google.com/p/go-uuid/uuid"
-	. "github.com/alsm/hrotti/packets"
+	// "code.google.com/p/go-uuid/uuid"
+	. "github.com/wjames2000/hrotti/packets"
+	uuid "github.com/satori/go.uuid"
 	//"io"
 	"net"
 	"sync"
 	"time"
-
 	// Plugins currently don't work (they create a cycle). We could break the cycle
 	// by fudging things through main.go, but I think the real solution is to use RPC
 	// and run plugins in a separate process

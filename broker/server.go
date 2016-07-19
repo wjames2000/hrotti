@@ -7,9 +7,11 @@ import (
 	"net/url"
 	"sync"
 
-	"code.google.com/p/go-uuid/uuid"
-	"code.google.com/p/go.net/websocket"
-	. "github.com/alsm/hrotti/packets"
+	// "code.google.com/p/go-uuid/uuid"
+	uuid "github.com/satori/go.uuid"
+	// "code.google.com/p/go.net/websocket"
+	. "github.com/wjames2000/hrotti/packets"
+	"golang.org/x/net/websocket"
 )
 
 type Hrotti struct {
@@ -167,8 +169,18 @@ func (h *Hrotti) InitClient(conn net.Conn) {
 	cp := newControlPacket(CONNECT).(*connectPacket)
 	cp.fixedHeader = cph
 	cp.unpack(body)*/
-	rp, _ := ReadPacket(conn)
-	cp := rp.(*ConnectPacket)
+	rp, err := ReadPacket(conn)
+	if err != nil {
+		ERROR.Println("server.go(174) ReadPacket connect is Error.", err)
+	}
+	var cp *ConnectPacket
+	if _, ok := rp.(*ConnectPacket); ok {
+		cp = rp.(*ConnectPacket)
+	} else {
+		ERROR.Println("server.go(179) conver rp.(*ConnectPacket)  is Error.")
+		conn.Close()
+		return
+	}
 
 	//Validate the CONNECT, check fields, values etc.
 	rc := cp.Validate()
@@ -193,7 +205,7 @@ func (h *Hrotti) InitClient(conn net.Conn) {
 	//check for a zero length client id and if it exists create one from the UUID library and return
 	//it on $SYS/session_identifier
 	if len(cp.ClientIdentifier) == 0 {
-		cp.ClientIdentifier = uuid.New()
+		cp.ClientIdentifier = uuid.NewV4().String()
 		sendSessionID = true
 	}
 	//Lock the clients hashmap while we check if we already know this clientid.

@@ -1,7 +1,7 @@
 package hrotti
 
 import (
-	. "github.com/alsm/hrotti/packets"
+	. "github.com/wjames2000/hrotti/packets"
 	"strings"
 	"sync"
 )

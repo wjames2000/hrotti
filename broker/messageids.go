@@ -1,7 +1,8 @@
 package hrotti
 
 import (
-	"code.google.com/p/go-uuid/uuid"
+	// "code.google.com/p/go-uuid/uuid"
+	uuid "github.com/satori/go.uuid"
 	"sync"
 )
 
@@ -40,7 +41,7 @@ func (m *messageIDs) getMsgID(id uuid.UUID) uint16 {
 	m.Lock()
 	defer m.Unlock()
 	for i := msgIDMin; i < msgIDMax; i++ {
-		if m.index[i] == nil {
+		if m.index[i] == uuid.Nil {
 			m.index[i] = id
 			return i
 		}
@@ -51,11 +52,11 @@ func (m *messageIDs) getMsgID(id uuid.UUID) uint16 {
 func (m *messageIDs) inUse(id uint16) bool {
 	m.RLock()
 	defer m.RUnlock()
-	return m.index[id] != nil
+	return m.index[id] != uuid.Nil
 }
 
 func (m *messageIDs) freeID(id uint16) {
 	m.Lock()
 	defer m.Unlock()
-	m.index[id] = nil
+	m.index[id] = uuid.Nil
 }

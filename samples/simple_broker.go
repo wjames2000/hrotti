@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/alsm/hrotti/broker"
+	"github.com/wjames2000/hrotti/broker"
 	"log"
 	"os"
 	"os/signal"

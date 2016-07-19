@@ -1,8 +1,9 @@
 package packets
 
 import (
-	"code.google.com/p/go-uuid/uuid"
+	// "code.google.com/p/go-uuid/uuid"
 	"fmt"
+	uuid "github.com/satori/go.uuid"
 	"io"
 )
 
